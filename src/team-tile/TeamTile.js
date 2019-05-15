@@ -5,7 +5,7 @@ import { Card } from 'react-materialize'
 import './teamTile.css'
 
 const TeamTile = (props) => {
-  const { teamName } = props
+  const { teamName, teamCity } = props
 
   const teamColorMap = {
     Thunder: '#007AC1',
@@ -18,18 +18,21 @@ const TeamTile = (props) => {
     <Card
       style={{ backgroundColor: teamColorMap[teamName], margin: 0 }}
       textClassName="white-text"
-      title={teamName}>
-      56-38
+      className="team-tile"
+      title={teamName.toUpperCase()}>
+      {teamCity}
     </Card>
   )
 }
 
 TeamTile.propTypes = {
   teamName: PropTypes.string,
+  teamCity: PropTypes.string,
 }
 
 TeamTile.defaultProps = {
   teamName: '',
+  teamCity: '',
 }
 
 export default TeamTile

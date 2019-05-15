@@ -2,3 +2,20 @@ div {
   margin: 0 !important;
   padding: 0 !important;
 }
+
+.boxscore-row {
+  border: none !important;
+}
+
+.boxscore-cell {
+  border: 1px solid rgba(0,0,0,0.12);
+  text-align: center;
+}
+
+.boxscore-footer {
+  text-align: center;
+}
+
+.game-duration-status {
+  padding-top: 2% !important;
+}

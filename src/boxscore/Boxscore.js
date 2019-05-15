@@ -4,20 +4,23 @@ import { Row, Col, CardPanel } from 'react-materialize'
 
 import TeamTile from '../team-tile/TeamTile'
 import './boxscore.css'
+import {
+  thunderInfo, heatInfo, marinerInfo, angelInfo,
+} from '../team-data'
 
 class Boxscore extends Component {
   static propTypes = {
     awayPeriodScores: PropTypes.arrayOf(PropTypes.number),
     homePeriodScores: PropTypes.arrayOf(PropTypes.number),
-    awayTeamName: PropTypes.string,
-    homeTeamName: PropTypes.string,
+    awayTeam: PropTypes.objectOf(PropTypes.object),
+    homeTeam: PropTypes.objectOf(PropTypes.object),
   }
 
   static defaultProps = {
     awayPeriodScores: [0, 0, 2, 1, 0, 0, 0, 0, 0],
     homePeriodScores: [0, 2, 0, 0, 0, 0, 1, 0, 1],
-    awayTeamName: 'Mariners',
-    homeTeamName: 'Angels',
+    awayTeam: thunderInfo,
+    homeTeam: heatInfo,
   }
 
   state = {}
@@ -25,7 +28,7 @@ class Boxscore extends Component {
   lineScores = () => {
     const {
       awayPeriodScores, homePeriodScores,
-      awayTeamName, homeTeamName,
+      awayTeam, homeTeam,
     } = this.props
     const lineScores = {
       header: [],
@@ -35,20 +38,21 @@ class Boxscore extends Component {
     // eslint-disable-next-line no-plusplus
     for (let i = 0; i <= awayPeriodScores.length; i++) {
       if (i === 0) {
-        lineScores.header.push(<td />)
-        lineScores.away.push(<td>{awayTeamName}</td>)
-        lineScores.home.push(<td>{homeTeamName}</td>)
+        lineScores.header.push(<td className="boxscore-cell grey lighten-2" />)
+        lineScores.away.push(<td className="boxscore-cell grey lighten-2">{awayTeam.abbreviation}</td>)
+        lineScores.home.push(<td className="boxscore-cell grey lighten-2">{homeTeam.abbreviation}</td>)
       } else {
-        lineScores.header.push(<td>{i}</td>)
-        lineScores.away.push(<td>{awayPeriodScores[i]}</td>)
-        lineScores.home.push(<td>{homePeriodScores[i]}</td>)
+        const idx = i - 1
+        lineScores.header.push(<td className="boxscore-cell  grey lighten-2">{i}</td>)
+        lineScores.away.push(<td className="boxscore-cell">{awayPeriodScores[idx]}</td>)
+        lineScores.home.push(<td className="boxscore-cell">{homePeriodScores[idx]}</td>)
       }
     }
     return lineScores
   }
 
   render() {
-    const { awayTeamName, homeTeamName } = this.props
+    const { awayTeam, homeTeam } = this.props
     const lineScores = this.lineScores()
 
     return (
@@ -56,20 +60,26 @@ class Boxscore extends Component {
         <Row>
           <Col m={6} s={12}>
             <CardPanel
-              className="grey lighten-3 with-footer"
+              className="grey lighten-4 with-footer"
               textClassName="black-text"
               title="Card title">
               <Row>
                 <table>
-                  <tr>{lineScores.header}</tr>
-                  <tr>{lineScores.away}</tr>
-                  <tr>{lineScores.home}</tr>
+                  <tr className="boxscore-row">{lineScores.header}</tr>
+                  <tr className="boxscore-row">{lineScores.away}</tr>
+                  <tr className="boxscore-row">{lineScores.home}</tr>
                 </table>
               </Row>
-              <Row>
-                <Col style={{ margin: 0 }} m={5}><TeamTile teamName={awayTeamName} /></Col>
-                <Col m={2}>Top 9</Col>
-                <Col style={{ margin: 0 }} m={5}><TeamTile teamName={homeTeamName} /></Col>
+              <Row className="grey lighten-2">
+                <Col className="boxscore-footer" m={5}>
+                  <TeamTile teamName={awayTeam.last_name} teamCity={awayTeam.first_name} />
+                </Col>
+                <Col className="boxscore-footer game-duration-status" m={2}>
+                  Final
+                </Col>
+                <Col className="boxscore-footer" m={5}>
+                  <TeamTile teamName={homeTeam.last_name} teamCity={homeTeam.first_name} />
+                </Col>
               </Row>
             </CardPanel>
           </Col>
