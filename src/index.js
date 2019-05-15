@@ -1,22 +1,13 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import PropTypes from 'prop-types'
-import './styles.css'
 
-const App = ({ name }) => (
-  <div>
-    Hello
-    { name }
-  </div>
+import Router from './Router'
+import './styles.css'
+import '../node_modules/materialize-css/dist/css/materialize.min.css'
+
+const App = () => (
+  <Router />
 )
 
-App.propTypes = {
-  name: PropTypes.string,
-}
-
-App.defaultProps = {
-  name: 'Charlie',
-}
-
 const mountNode = document.getElementById('app')
-ReactDOM.render(<App name="Jane" />, mountNode)
+ReactDOM.render(<App />, mountNode)
