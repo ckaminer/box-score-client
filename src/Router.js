@@ -1,8 +1,8 @@
 import React from 'react'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 
-import Boxscore from './boxscore/Boxscore'
-import Dashboard from './dashboard/Dashboard'
+import Boxscore from './components/boxscore/Boxscore'
+import Dashboard from './components/dashboard/Dashboard'
 
 const Router = () => (
   <BrowserRouter>
