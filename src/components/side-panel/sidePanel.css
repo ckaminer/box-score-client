@@ -1,0 +1,35 @@
+.performer-container {
+  padding: 0% 5% !important;
+  height: 100% !important;
+}
+
+tr {
+  border: none !important;
+}
+
+.third-width {
+  width: 33%;
+}
+
+.performer-home {
+  text-align: right !important;
+  padding-right: 0 !important;
+}
+
+.performer-away {
+  text-align: left !important;
+  padding-left: 0 !important;
+}
+
+.align-center {
+  text-align: center !important;
+}
+
+.performer-header {
+  padding: 0 !important;
+}
+
+.mlb-panel-table {
+  width: 50%;
+  height: 100%;
+}

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import uuidv1 from 'uuid/v1'
 
 import Boxscore from '../boxscore/Boxscore'
+import SidePanel from '../side-panel/SidePanel'
 import './dashboard.css'
 import { getGameData } from '../../api/games'
 
@@ -21,14 +22,19 @@ class Dashboard extends Component {
 
     return games.map((game) => (
       <div className="dashboard-item" key={uuidv1()}>
-        <Boxscore
-          league={game.league}
-          homeTeam={game.home_team}
-          awayTeam={game.away_team}
-          homePeriodScores={game.home_period_scores}
-          awayPeriodScores={game.away_period_scores}
-          homeTeamTotals={this.totals(game).home}
-          awayTeamTotals={this.totals(game).away} />
+        <div className="boxscore">
+          <Boxscore
+            league={game.league}
+            homeTeam={game.home_team}
+            awayTeam={game.away_team}
+            homePeriodScores={game.home_period_scores}
+            awayPeriodScores={game.away_period_scores}
+            homeTeamTotals={this.totals(game).home}
+            awayTeamTotals={this.totals(game).away} />
+        </div>
+        <div className="sidepanel">
+          <SidePanel game={game} />
+        </div>
       </div>
     ))
   }
