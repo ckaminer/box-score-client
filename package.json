@@ -12,7 +12,7 @@
     "lint": "./node_modules/.bin/eslint .",
     "build-dev": "webpack -d --mode development",
     "build-prod": "webpack -p --mode production",
-    "start": "webpack-dev-server --hot --mode development"
+    "start": "webpack-dev-server --hot --mode development --host 0.0.0.0"
   },
   "dependencies": {
     "axios": "^0.18.0",

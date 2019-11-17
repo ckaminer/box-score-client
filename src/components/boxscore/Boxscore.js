@@ -74,8 +74,8 @@ class Boxscore extends Component {
 
     if (league === 'NBA') {
       lineScores.header.push(<td className="boxscore-cell grey lighten-2" key={uuidv1()}>T</td>)
-      lineScores.away.push(<td className="boxscore-cell" key={uuidv1()}>{awayTeamTotals.points}</td>)
-      lineScores.home.push(<td className="boxscore-cell" key={uuidv1()}>{homeTeamTotals.points}</td>)
+      lineScores.away.push(<td className="boxscore-cell grey lighten-2" key={uuidv1()}>{awayTeamTotals.points}</td>)
+      lineScores.home.push(<td className="boxscore-cell grey lighten-2" key={uuidv1()}>{homeTeamTotals.points}</td>)
     } if (league === 'MLB') {
       lineScores.header.push(<td className="boxscore-cell grey lighten-2" key={uuidv1()}>R</td>)
       lineScores.header.push(<td className="boxscore-cell grey lighten-2" key={uuidv1()}>H</td>)
@@ -96,13 +96,12 @@ class Boxscore extends Component {
     const lineScores = this.lineScores()
 
     return (
-      <div>
+      <div className="boxscore-container">
         <Row>
-          <Col m={6} s={12}>
+          <Col m={12} s={12}>
             <CardPanel
               className="grey lighten-4 with-footer"
-              textClassName="black-text"
-              title="Card title">
+              textClassName="black-text">
               <Row>
                 <table>
                   <tbody>
