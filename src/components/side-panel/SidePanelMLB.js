@@ -51,22 +51,30 @@ class SidePanelMLB extends Component {
             <tbody>
               <tr>
                 <td className="align-center">
-                  {`W: ${wp.display_name[0]}. ${wp.last_name} - ${wp.team_abbreviation}`}
+                  <p>
+                    <b>WIN: </b>
+                    {`${wp.display_name[0]}. ${wp.last_name}`}
+                  </p>
+                  <p className="team-position-subtitle">
+                    {`${wp.team_abbreviation} - ${wp.pitch_order === 1 ? 'SP' : 'RP'}`}
+                  </p>
+                  <p className="mlb-stat-line">
+                    {`${wp.innings_pitched} IP, ${wp.hits_allowed} H, ${wp.runs_allowed} R, ${wp.earned_runs} ER, ${wp.strike_outs} K`}
+                  </p>
                 </td>
               </tr>
               <tr>
                 <td className="align-center">
-                  {`${wp.innings_pitched} IP, ${wp.hits_allowed} H, ${wp.runs_allowed} R, ${wp.earned_runs} ER, ${wp.strike_outs} K`}
-                </td>
-              </tr>
-              <tr>
-                <td className="align-center">
-                  {`L: ${lp.display_name[0]}. ${lp.last_name} - ${lp.team_abbreviation}`}
-                </td>
-              </tr>
-              <tr>
-                <td className="align-center">
-                  {`${lp.innings_pitched} IP, ${lp.hits_allowed} H, ${lp.runs_allowed} R, ${lp.earned_runs} ER, ${lp.strike_outs} K`}
+                  <p>
+                    <b>LOSS: </b>
+                    {`${lp.display_name[0]}. ${lp.last_name}`}
+                  </p>
+                  <p className="team-position-subtitle">
+                    {`${lp.team_abbreviation} - ${lp.pitch_order === 1 ? 'SP' : 'RP'}`}
+                  </p>
+                  <p className="mlb-stat-line">
+                    {`${lp.innings_pitched} IP, ${lp.hits_allowed} H, ${lp.runs_allowed} R, ${lp.earned_runs} ER, ${lp.strike_outs} K`}
+                  </p>
                 </td>
               </tr>
             </tbody>
@@ -77,22 +85,28 @@ class SidePanelMLB extends Component {
             <tbody>
               <tr>
                 <td className="align-center">
-                  {`${homeHitter.display_name[0]}. ${homeHitter.last_name} - ${homeHitter.team_abbreviation}`}
+                  <p>
+                    {`${awayHitter.display_name[0]}. ${awayHitter.last_name}`}
+                  </p>
+                  <p className="team-position-subtitle">
+                    {`${awayHitter.team_abbreviation} - ${awayHitter.position}`}
+                  </p>
+                  <p className="mlb-stat-line">
+                    {awayHitter.batting_highlights}
+                  </p>
                 </td>
               </tr>
               <tr>
                 <td className="align-center">
-                  {homeHitter.batting_highlights}
-                </td>
-              </tr>
-              <tr>
-                <td className="align-center">
-                  {`${awayHitter.display_name[0]}. ${awayHitter.last_name} - ${awayHitter.team_abbreviation}`}
-                </td>
-              </tr>
-              <tr>
-                <td className="align-center">
-                  {awayHitter.batting_highlights}
+                  <p>
+                    {`${homeHitter.display_name[0]}. ${homeHitter.last_name}`}
+                  </p>
+                  <p className="team-position-subtitle">
+                    {`${homeHitter.team_abbreviation} - ${homeHitter.position}`}
+                  </p>
+                  <p className="mlb-stat-line">
+                    {homeHitter.batting_highlights}
+                  </p>
                 </td>
               </tr>
             </tbody>
