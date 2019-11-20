@@ -11,6 +11,7 @@ import {
 
 class Boxscore extends Component {
   static propTypes = {
+    completed: PropTypes.bool,
     awayPeriodScores: PropTypes.arrayOf(PropTypes.number),
     homePeriodScores: PropTypes.arrayOf(PropTypes.number),
     awayTeam: PropTypes.object,
@@ -21,6 +22,7 @@ class Boxscore extends Component {
   }
 
   static defaultProps = {
+    completed: true,
     awayPeriodScores: [0, 0, 2, 1, 0, 0, 0, 0, 0],
     homePeriodScores: [0, 2, 0, 0, 0, 0, 1, 0, 1],
     awayTeam: thunderInfo,
@@ -90,6 +92,29 @@ class Boxscore extends Component {
     return lineScores
   }
 
+  gameStatus = () => {
+    const {
+      completed,
+      league,
+      awayPeriodScores,
+      homePeriodScores,
+    } = this.props
+    if (!completed) {
+      if (league === 'NBA') {
+        return awayPeriodScores.length < 5
+          ? `QTR ${awayPeriodScores.length}`
+          : 'OT'
+      } if (league === 'MLB') {
+        if (awayPeriodScores.length > homePeriodScores.length) {
+          return `BOT ${awayPeriodScores.length}`
+        }
+        return `TOP ${homePeriodScores.length + 1}`
+      }
+    }
+
+    return 'Final'
+  }
+
   render = () => {
     const { awayTeam, homeTeam } = this.props
     const lineScores = this.lineScores()
@@ -115,7 +140,7 @@ class Boxscore extends Component {
                   <TeamTile teamName={awayTeam.last_name} teamCity={awayTeam.first_name} />
                 </Col>
                 <Col className="boxscore-footer game-duration-status" m={2}>
-                  Final
+                  {this.gameStatus()}
                 </Col>
                 <Col className="boxscore-footer" m={5}>
                   <TeamTile teamName={homeTeam.last_name} teamCity={homeTeam.first_name} />

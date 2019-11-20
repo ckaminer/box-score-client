@@ -170,7 +170,7 @@ describe('SidePanelMLB', () => {
   describe('#render', () => {
     it('should render two tables with top performers', () => {
       expect(wrapper.find('table').length).toBe(2)
-      expect(wrapper.find('.align-center').length).toBe(8)
+      expect(wrapper.find('.align-center').length).toBe(4)
     })
   })
 

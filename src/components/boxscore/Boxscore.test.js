@@ -108,4 +108,86 @@ describe('Boxscore', () => {
       expect(element3.text()).toEqual('E')
     })
   })
+
+  describe('#gameStatus', () => {
+    it('should return Final if the game status is completed', () => {
+      const awayPeriodScores = [31, 32, 33, 34]
+      const homePeriodScores = [21, 22, 23, 24]
+
+      const wrapper = shallow(<Boxscore
+        completed
+        awayPeriodScores={awayPeriodScores}
+        homePeriodScores={homePeriodScores}
+        league="NBA" />)
+
+      const status = wrapper.instance().gameStatus()
+
+      expect(status).toEqual('Final')
+    })
+
+    describe('NBA behavior', () => {
+      it('should return the current quarter if that total is less than 5', () => {
+        const awayPeriodScores = [31, 32, 33, 34]
+        const homePeriodScores = [21, 22, 23, 24]
+
+        const wrapper = shallow(<Boxscore
+          completed={false}
+          awayPeriodScores={awayPeriodScores}
+          homePeriodScores={homePeriodScores}
+          league="NBA" />)
+
+        const status = wrapper.instance().gameStatus()
+
+        expect(status).toEqual('QTR 4')
+      })
+
+      it('should return OT if the game is in overtime aka beyond four quarters', () => {
+        const awayPeriodScores = [31, 32, 33, 34, 10]
+        const homePeriodScores = [21, 22, 23, 24, 10]
+
+        const wrapper = shallow(<Boxscore
+          completed={false}
+          awayPeriodScores={awayPeriodScores}
+          homePeriodScores={homePeriodScores}
+          league="NBA" />)
+
+        const status = wrapper.instance().gameStatus()
+
+        expect(status).toEqual('OT')
+      })
+    })
+
+    describe('MLB behavior', () => {
+      // assume that scores in baseball are only reported upon completion of each half inning
+      it('should return the bottom of the inning if more away scores have been reported', () => {
+        const awayPeriodScores = [2, 0, 1, 0]
+        const homePeriodScores = [0, 0, 1]
+
+        const wrapper = shallow(<Boxscore
+          completed={false}
+          awayPeriodScores={awayPeriodScores}
+          homePeriodScores={homePeriodScores}
+          league="MLB" />)
+
+        const status = wrapper.instance().gameStatus()
+
+        expect(status).toEqual('BOT 4')
+      })
+
+      it('should return the top of the next inning if the same amount of home/away scores reported', () => {
+        const awayPeriodScores = [2, 0, 1, 0]
+        const homePeriodScores = [0, 0, 1, 1]
+
+        const wrapper = shallow(<Boxscore
+          completed={false}
+          awayPeriodScores={awayPeriodScores}
+          homePeriodScores={homePeriodScores}
+          league="MLB" />)
+
+        const status = wrapper.instance().gameStatus()
+
+        expect(status).toEqual('TOP 5')
+      })
+    })
+  })
 })

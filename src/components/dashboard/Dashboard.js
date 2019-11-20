@@ -24,6 +24,7 @@ class Dashboard extends Component {
       <div className="dashboard-item" key={uuidv1()}>
         <div className="boxscore">
           <Boxscore
+            completed={game.event_information.status === 'completed'}
             league={game.league}
             homeTeam={game.home_team}
             awayTeam={game.away_team}
