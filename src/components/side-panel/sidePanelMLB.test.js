@@ -1,5 +1,5 @@
 import React from 'react'
-import { shallow } from 'enzyme'
+import { mount } from 'enzyme'
 
 import SidePanelMLB from './SidePanelMLB'
 
@@ -162,7 +162,7 @@ describe('SidePanelMLB', () => {
       batting_highlights: '1-4',
     },
   ]
-  const wrapper = shallow(<SidePanelMLB
+  const wrapper = mount(<SidePanelMLB
     awayPitchers={awayPitchers}
     homePitchers={homePitchers}
     awayBatters={awayBatters}
