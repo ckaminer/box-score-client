@@ -135,7 +135,7 @@ class Boxscore extends Component {
                   </tbody>
                 </table>
               </Row>
-              <Row className="grey lighten-2">
+              <Row className="grey lighten-2" style={{ display: 'flex' }}>
                 <Col className="boxscore-footer" m={5}>
                   <TeamTile teamName={awayTeam.last_name} teamCity={awayTeam.first_name} />
                 </Col>

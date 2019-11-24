@@ -8,7 +8,7 @@ describe('SidePanelMLB', () => {
     {
       last_name: 'Hernández',
       first_name: 'Félix',
-      display_name: 'Felix Hernandez',
+      display_name: 'Felix Hernández',
       win: true,
       loss: false,
       innings_pitched: 6,
@@ -168,16 +168,26 @@ describe('SidePanelMLB', () => {
     awayBatters={awayBatters}
     homeBatters={homeBatters} />)
   describe('#render', () => {
-    it('should render two tables with top performers', () => {
-      expect(wrapper.find('table').length).toBe(2)
-      expect(wrapper.find('.align-center').length).toBe(4)
+    it('should render two sections with top performers', () => {
+      expect(wrapper.find('section.mlb-panel-column').length).toBe(2)
+      expect(wrapper.find('.mlb-panel-child').length).toBe(4)
+    })
+
+    it('should render the winning and losing pitcher names', () => {
+      expect(wrapper.text().includes('WIN: F. Hernández')).toBe(true)
+      expect(wrapper.text().includes('LOSS: C. Wilson')).toBe(true)
+    })
+
+    it('should render the most productive hitters for each team', () => {
+      expect(wrapper.text().includes('K. Seager')).toBe(true)
+      expect(wrapper.text().includes('T. Hunter')).toBe(true)
     })
   })
 
   describe('#getPerformingPitcher', () => {
     it('should return the winning pitcher when the category is win', () => {
       const winningPitcher = wrapper.instance().getPerformingPitcher('win')
-      expect(winningPitcher.display_name).toBe('Felix Hernandez')
+      expect(winningPitcher.display_name).toBe('Felix Hernández')
     })
 
     it('should return the losing pitcher when the category is loss', () => {

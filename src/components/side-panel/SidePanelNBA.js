@@ -21,50 +21,41 @@ class SidePanelNBA extends Component {
     const homeRebounds = highestTotal(homeTeamStats, 'rebounds')
 
     return (
-      <table>
-        <thead>
-          <tr>
-            <th className="third-width performer-header">{`${awayPoints.team_abbreviation}`}</th>
-            <th className="third-width performer-header" />
-            <th className="third-width performer-header" style={{ textAlign: 'right' }}>{`${homePoints.team_abbreviation}`}</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td className="third-width performer-away">
+      <main className="nba-panel-container">
+        <header className="nba-panel-header">
+          <h6><b>{`${awayPoints.team_abbreviation}`}</b></h6>
+          <h6><b>{`${homePoints.team_abbreviation}`}</b></h6>
+        </header>
+        <section className="nba-performer-container">
+          <div className="nba-panel-column">
+            <p className="nba-panel-line-item">
               {`${awayPoints.first_name[0]}. ${awayPoints.last_name} - ${awayPoints.points}`}
-            </td>
-            <td className="third-width align-center">
-              Points
-            </td>
-            <td className="third-width performer-home">
-              {`${homePoints.first_name[0]}. ${homePoints.last_name} - ${homePoints.points}`}
-            </td>
-          </tr>
-          <tr>
-            <td className="third-width performer-away">
+            </p>
+            <p className="nba-panel-line-item">
               {`${awayAssists.first_name[0]}. ${awayAssists.last_name} - ${awayAssists.assists}`}
-            </td>
-            <td className="third-width align-center">
-              Assists
-            </td>
-            <td className="third-width performer-home">
-              {`${homeAssists.first_name[0]}. ${homeAssists.last_name} - ${homeAssists.assists}`}
-            </td>
-          </tr>
-          <tr>
-            <td className="third-width performer-away">
+            </p>
+            <p className="nba-panel-line-item">
               {`${awayRebounds.first_name[0]}. ${awayRebounds.last_name} - ${awayRebounds.rebounds}`}
-            </td>
-            <td className="third-width align-center">
-              Rebounds
-            </td>
-            <td className="third-width performer-home">
+            </p>
+          </div>
+          <div className="nba-panel-column">
+            <p className="nba-panel-line-item align-center">Points</p>
+            <p className="nba-panel-line-item align-center">Assists</p>
+            <p className="nba-panel-line-item align-center">Rebounds</p>
+          </div>
+          <div className="nba-panel-column">
+            <p className="nba-panel-line-item">
+              {`${homePoints.first_name[0]}. ${homePoints.last_name} - ${homePoints.points}`}
+            </p>
+            <p className="nba-panel-line-item">
+              {`${homeAssists.first_name[0]}. ${homeAssists.last_name} - ${homeAssists.assists}`}
+            </p>
+            <p className="nba-panel-line-item">
               {`${homeRebounds.first_name[0]}. ${homeRebounds.last_name} - ${homeRebounds.rebounds}`}
-            </td>
-          </tr>
-        </tbody>
-      </table>
+            </p>
+          </div>
+        </section>
+      </main>
     )
   }
 }

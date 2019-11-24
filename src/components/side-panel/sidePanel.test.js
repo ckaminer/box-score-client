@@ -12,11 +12,11 @@ describe('SidePanel', () => {
         home_stats: [{}],
       }
       const wrapper = shallow(<SidePanel game={game} />)
-      const card = wrapper.find('Card')
+      const card = wrapper.find('CardPanel')
 
       expect(card.exists()).toBe(true)
-      expect(card.props().title).toBe('Top Performers')
 
+      expect(wrapper.find('.side-panel-title').text()).toBe('Top Performers')
       expect(wrapper.find('SidePanelNBA').exists()).toBe(true)
     })
 
@@ -27,11 +27,11 @@ describe('SidePanel', () => {
         home_stats: [{}],
       }
       const wrapper = shallow(<SidePanel game={game} />)
-      const card = wrapper.find('Card')
+      const card = wrapper.find('CardPanel')
 
       expect(card.exists()).toBe(true)
-      expect(card.props().title).toBe('Top Performers')
 
+      expect(wrapper.find('.side-panel-title').text()).toBe('Top Performers')
       expect(wrapper.find('SidePanelMLB').exists()).toBe(true)
     })
   })

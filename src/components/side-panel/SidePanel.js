@@ -2,7 +2,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { Card } from 'react-materialize'
+import { CardPanel } from 'react-materialize'
 import SidePanelNBA from './SidePanelNBA'
 import SidePanelMLB from './SidePanelMLB'
 import './sidePanel.css'
@@ -26,20 +26,19 @@ const SidePanel = (props) => {
             homeBatters={game.home_batters} />
         )
       default:
-        return <Card />
+        return <CardPanel />
     }
   }
 
   return (
-    <Card
+    <CardPanel
       style={{ height: '100%', outline: 'solid', outlineWidth: 'thin' }}
-      className="grey lighten-4"
-      textClassName="black-text center"
-      title="Top Performers">
+      className="grey lighten-4">
+      <h5 className="side-panel-title">Top Performers</h5>
       <div className="performer-container">
         {leaguePanel()}
       </div>
-    </Card>
+    </CardPanel>
   )
 }
 

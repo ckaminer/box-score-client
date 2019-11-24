@@ -66,8 +66,8 @@ describe('SidePanelNBA', () => {
     const wrapper = shallow(<SidePanelNBA
       awayTeamStats={awayStats}
       homeTeamStats={homeStats} />)
-    it('should render a table with top performers', () => {
-      expect(wrapper.find('table').exists()).toBe(true)
+    it('should render a panel with top performers', () => {
+      expect(wrapper.find('main.nba-panel-container').exists()).toBe(true)
       const categoryLabels = wrapper.find('.align-center').getElements()
       expect(categoryLabels[0].props.children).toBe('Points')
       expect(categoryLabels[1].props.children).toBe('Assists')
@@ -75,12 +75,14 @@ describe('SidePanelNBA', () => {
     })
 
     it('should display the names and stats of top performers', () => {
-      const homePerformers = wrapper.find('.performer-home').getElements()
+      const homePerformersColumn = wrapper.find('.nba-panel-column').getElements()[2]
+      const homePerformers = homePerformersColumn.props.children
       expect(homePerformers[0].props.children).toBe('L. James - 26')
       expect(homePerformers[1].props.children).toBe('L. James - 13')
       expect(homePerformers[2].props.children).toBe('L. James - 11')
 
-      const awayPerformers = wrapper.find('.performer-away').getElements()
+      const awayPerformersColumn = wrapper.find('.nba-panel-column').getElements()[0]
+      const awayPerformers = awayPerformersColumn.props.children
       expect(awayPerformers[0].props.children).toBe('K. Durant - 32')
       expect(awayPerformers[1].props.children).toBe('R. Westbrook - 6')
       expect(awayPerformers[2].props.children).toBe('K. Durant - 11')

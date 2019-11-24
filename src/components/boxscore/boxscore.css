@@ -22,5 +22,7 @@ div {
 }
 
 .game-duration-status {
-  padding-top: 2% !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
