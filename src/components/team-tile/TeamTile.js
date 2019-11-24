@@ -2,17 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Card } from 'react-materialize'
 
+import teamColorMap from '../../team-colors'
 import './teamTile.css'
 
 const TeamTile = (props) => {
   const { teamName, teamCity } = props
-
-  const teamColorMap = {
-    Thunder: '#007AC1',
-    Heat: '#98002E',
-    Mariners: '#0C2C56',
-    Angels: '#BA0021',
-  }
 
   return (
     <Card

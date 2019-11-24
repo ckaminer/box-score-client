@@ -49,8 +49,8 @@ class SidePanelMLB extends Component {
         <section className="mlb-panel-column">
           <div className="mlb-panel-child">
             <p className="mlb-panel-line-item">
-              <b>WIN: </b>
-              {`${wp.display_name[0]}. ${wp.last_name}`}
+              <span className="win-loss-badge" style={{ backgroundColor: 'green' }}>WIN</span>
+              {` - ${wp.display_name[0]}. ${wp.last_name}`}
             </p>
             <p className="mlb-team-position-subtitle mlb-panel-line-item">
               {`${wp.team_abbreviation} - ${wp.pitch_order === 1 ? 'SP' : 'RP'}`}
@@ -61,8 +61,8 @@ class SidePanelMLB extends Component {
           </div>
           <div className="mlb-panel-child">
             <p className="mlb-panel-line-item">
-              <b>LOSS: </b>
-              {`${lp.display_name[0]}. ${lp.last_name}`}
+              <span className="win-loss-badge" style={{ backgroundColor: 'red' }}>LOSS</span>
+              {` - ${lp.display_name[0]}. ${lp.last_name}`}
             </p>
             <p className="mlb-team-position-subtitle mlb-panel-line-item">
               {`${lp.team_abbreviation} - ${lp.pitch_order === 1 ? 'SP' : 'RP'}`}

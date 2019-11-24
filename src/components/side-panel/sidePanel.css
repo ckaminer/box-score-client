@@ -10,6 +10,12 @@
   height: 85% !important;
 }
 
+.win-loss-badge {
+  padding: 0px 2px;
+  color: white;
+  border-radius: 5px;
+}
+
 /* MLB SPECIFIC STYLES */
 
 .mlb-panel-container {
@@ -71,4 +77,15 @@
   display: flex;
   justify-content: space-between;
   height: 20%;
+}
+
+.nba-panel-header > h6 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0px 3px;
+  margin-top: .5rem;
+  margin-bottom: .5rem;
+  color: white;
+  border-radius: 5px;
 }

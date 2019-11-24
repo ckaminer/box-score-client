@@ -174,8 +174,8 @@ describe('SidePanelMLB', () => {
     })
 
     it('should render the winning and losing pitcher names', () => {
-      expect(wrapper.text().includes('WIN: F. Hernández')).toBe(true)
-      expect(wrapper.text().includes('LOSS: C. Wilson')).toBe(true)
+      expect(wrapper.text().includes('WIN - F. Hernández')).toBe(true)
+      expect(wrapper.text().includes('LOSS - C. Wilson')).toBe(true)
     })
 
     it('should render the most productive hitters for each team', () => {

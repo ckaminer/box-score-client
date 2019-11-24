@@ -4,8 +4,8 @@ div {
 }
 
 .boxscore-container {
-  outline: solid !important; 
-  outline-width: thin !important;
+  box-shadow: 5px 5px lightgrey;
+  border-radius: 2px;
 }
 
 .boxscore-row {

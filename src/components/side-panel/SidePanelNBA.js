@@ -1,16 +1,35 @@
 import React, { Component } from 'react'
-import highestTotal from './helper'
+import PropTypes from 'prop-types'
+
+import teamColorMap from '../../team-colors'
 import './sidePanel.css'
 
 class SidePanelNBA extends Component {
+  static propTypes = {
+    highestTotal: PropTypes.func,
+    awayTeamStats: PropTypes.arrayOf(PropTypes.object),
+    homeTeamStats: PropTypes.arrayOf(PropTypes.object),
+    awayTeam: PropTypes.object,
+    homeTeam: PropTypes.object,
+  }
+
+  static defaultProps = {
+    highestTotal: null,
+    awayTeamStats: [{}],
+    homeTeamStats: [{}],
+    awayTeam: {},
+    homeTeam: {},
+  }
+
   addUpRebounds = (collection) => collection.map((player) => {
     const rebounds = player.offensive_rebounds + player.defensive_rebounds
     return { ...player, rebounds }
   })
 
   render = () => {
-    // eslint-disable-next-line react/prop-types
     let { awayTeamStats, homeTeamStats } = this.props
+    const { highestTotal, awayTeam, homeTeam } = this.props
+
     awayTeamStats = this.addUpRebounds(awayTeamStats)
     homeTeamStats = this.addUpRebounds(homeTeamStats)
     const awayPoints = highestTotal(awayTeamStats, 'points')
@@ -23,8 +42,8 @@ class SidePanelNBA extends Component {
     return (
       <main className="nba-panel-container">
         <header className="nba-panel-header">
-          <h6><b>{`${awayPoints.team_abbreviation}`}</b></h6>
-          <h6><b>{`${homePoints.team_abbreviation}`}</b></h6>
+          <h6 style={{ backgroundColor: teamColorMap[awayTeam.last_name] }}><b>{`${awayTeam.abbreviation}`}</b></h6>
+          <h6 style={{ backgroundColor: teamColorMap[homeTeam.last_name] }}><b>{`${homeTeam.abbreviation}`}</b></h6>
         </header>
         <section className="nba-performer-container">
           <div className="nba-panel-column">
