@@ -14,7 +14,7 @@ class SidePanelNBA extends Component {
   }
 
   static defaultProps = {
-    highestTotal: null,
+    highestTotal: () => {},
     awayTeamStats: [{}],
     homeTeamStats: [{}],
     awayTeam: {},
