@@ -2,6 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 
 import Boxscore from './Boxscore'
+import * as leagueDisplays from './leagueDisplays'
 
 describe('Boxscore', () => {
   describe('#render', () => {
@@ -24,6 +25,7 @@ describe('Boxscore', () => {
       const homeTeam = { abbreviation: 'DIL' }
 
       const wrapper = shallow(<Boxscore
+        league="NBA"
         awayPeriodScores={awayScores}
         homePeriodScores={homeScores}
         awayTeam={awayTeam}
@@ -46,6 +48,7 @@ describe('Boxscore', () => {
       const homeTeam = { abbreviation: 'DIL' }
 
       const wrapper = shallow(<Boxscore
+        league="NBA"
         awayPeriodScores={awayScores}
         homePeriodScores={homeScores}
         awayTeam={awayTeam}
@@ -57,10 +60,49 @@ describe('Boxscore', () => {
       expect(lines.away.length).toEqual(12)
       expect(lines.home.length).toEqual(12)
     })
+
+    it('should have a different amount of columns depending on the league', () => {
+      const awayScores = [11, 22, 33, 44, 55, 9, 8, 5, 3, 3]
+      const homeScores = [66, 77, 88, 99, 10, 9, 8, 5, 3, 3]
+      const awayTeam = { abbreviation: 'EDH' }
+      const homeTeam = { abbreviation: 'DIL' }
+
+      let wrapper = shallow(<Boxscore
+        league="NBA"
+        awayPeriodScores={awayScores}
+        homePeriodScores={homeScores}
+        awayTeam={awayTeam}
+        homeTeam={homeTeam} />)
+      let lines = wrapper.instance().lineScores()
+      expect(lines.header.length).toEqual(12)
+      expect(lines.away.length).toEqual(12)
+      expect(lines.home.length).toEqual(12)
+
+      wrapper = shallow(<Boxscore
+        league="MLB"
+        awayPeriodScores={awayScores}
+        homePeriodScores={homeScores}
+        awayTeam={awayTeam}
+        homeTeam={homeTeam} />)
+      lines = wrapper.instance().lineScores()
+      expect(lines.header.length).toEqual(14)
+      expect(lines.away.length).toEqual(14)
+      expect(lines.home.length).toEqual(14)
+    })
   })
 
   describe('#gameSummary', () => {
-    it('should return the final box score columns for the game', () => {
+    it('should return the game summary for the given league - NBA', () => {
+      const mockReturnValue = {
+        header: [<td key="1">T</td>],
+        away: [<td key="2">102</td>],
+        home: [<td key="3">99</td>],
+      }
+      const mockNBASummary = jest.fn()
+        .mockReturnValue(mockReturnValue)
+
+      leagueDisplays.default.NBA.gameSummary = mockNBASummary
+
       const awayTotals = { points: 123 }
       const homeTotals = { points: 98 }
 
@@ -71,17 +113,22 @@ describe('Boxscore', () => {
 
       const summary = wrapper.instance().gameSummary()
 
-      expect(summary.header.length).toEqual(1)
-      expect(summary.away.length).toEqual(1)
-      expect(summary.home.length).toEqual(1)
-
-      const element = shallow(summary.header[0])
-      expect(element.find('td').exists()).toBe(true)
-      expect(element.text()).toEqual('T')
+      expect(mockNBASummary).toHaveBeenCalled()
+      expect(summary).toEqual(mockReturnValue)
     })
 
-    it('should return a different summary for MLB games', () => {
-      const awayTotals = { runs: 5, hits: 11, errors: 1 }
+    it('should return the game summary for the given league - MLB', () => {
+      const mockReturnValue = {
+        header: [<td key="1">R</td>, <td key="2">H</td>, <td key="3">E</td>],
+        away: [<td key="4">2</td>, <td key="5">10</td>, <td key="6">1</td>],
+        home: [<td key="7">6</td>, <td key="8">9</td>, <td key="9">0</td>],
+      }
+      const mockMLBSummary = jest.fn()
+        .mockReturnValue(mockReturnValue)
+
+      leagueDisplays.default.MLB.gameSummary = mockMLBSummary
+
+      const awayTotals = { runs: 2, hits: 10, errors: 1 }
       const homeTotals = { runs: 6, hits: 9, errors: 0 }
 
       const wrapper = shallow(<Boxscore
@@ -91,25 +138,54 @@ describe('Boxscore', () => {
 
       const summary = wrapper.instance().gameSummary()
 
-      expect(summary.header.length).toEqual(3)
-      expect(summary.away.length).toEqual(3)
-      expect(summary.home.length).toEqual(3)
-
-      const element1 = shallow(summary.header[0])
-      expect(element1.find('td').exists()).toBe(true)
-      expect(element1.text()).toEqual('R')
-
-      const element2 = shallow(summary.header[1])
-      expect(element2.find('td').exists()).toBe(true)
-      expect(element2.text()).toEqual('H')
-
-      const element3 = shallow(summary.header[2])
-      expect(element3.find('td').exists()).toBe(true)
-      expect(element3.text()).toEqual('E')
+      expect(mockMLBSummary).toHaveBeenCalled()
+      expect(summary).toEqual(mockReturnValue)
     })
   })
 
   describe('#gameStatus', () => {
+    it('should call the league specific game summary function if game is not completed- NBA', () => {
+      const mockNBAStatus = jest.fn()
+        .mockReturnValue('QTR 4')
+
+      leagueDisplays.default.NBA.gameStatus = mockNBAStatus
+
+      const awayPeriodScores = [31, 32, 33, 34]
+      const homePeriodScores = [21, 22, 23, 24]
+
+      const wrapper = shallow(<Boxscore
+        completed={false}
+        awayPeriodScores={awayPeriodScores}
+        homePeriodScores={homePeriodScores}
+        league="NBA" />)
+
+      const status = wrapper.instance().gameStatus()
+
+      expect(mockNBAStatus).toHaveBeenCalled()
+      expect(status).toEqual('QTR 4')
+    })
+
+    it('should call the league specific game summary function if game is not completed - MLB', () => {
+      const mockMLBStatus = jest.fn()
+        .mockReturnValue('TOP 5')
+
+      leagueDisplays.default.MLB.gameStatus = mockMLBStatus
+
+      const awayPeriodScores = [0, 0, 0, 1]
+      const homePeriodScores = [2, 1, 0, 0]
+
+      const wrapper = shallow(<Boxscore
+        completed={false}
+        awayPeriodScores={awayPeriodScores}
+        homePeriodScores={homePeriodScores}
+        league="MLB" />)
+
+      const status = wrapper.instance().gameStatus()
+
+      expect(mockMLBStatus).toHaveBeenCalled()
+      expect(status).toEqual('TOP 5')
+    })
+
     it('should return Final if the game status is completed', () => {
       const awayPeriodScores = [31, 32, 33, 34]
       const homePeriodScores = [21, 22, 23, 24]
@@ -123,71 +199,6 @@ describe('Boxscore', () => {
       const status = wrapper.instance().gameStatus()
 
       expect(status).toEqual('Final')
-    })
-
-    describe('NBA behavior', () => {
-      it('should return the current quarter if that total is less than 5', () => {
-        const awayPeriodScores = [31, 32, 33, 34]
-        const homePeriodScores = [21, 22, 23, 24]
-
-        const wrapper = shallow(<Boxscore
-          completed={false}
-          awayPeriodScores={awayPeriodScores}
-          homePeriodScores={homePeriodScores}
-          league="NBA" />)
-
-        const status = wrapper.instance().gameStatus()
-
-        expect(status).toEqual('QTR 4')
-      })
-
-      it('should return OT if the game is in overtime aka beyond four quarters', () => {
-        const awayPeriodScores = [31, 32, 33, 34, 10]
-        const homePeriodScores = [21, 22, 23, 24, 10]
-
-        const wrapper = shallow(<Boxscore
-          completed={false}
-          awayPeriodScores={awayPeriodScores}
-          homePeriodScores={homePeriodScores}
-          league="NBA" />)
-
-        const status = wrapper.instance().gameStatus()
-
-        expect(status).toEqual('OT')
-      })
-    })
-
-    describe('MLB behavior', () => {
-      // assume that scores in baseball are only reported upon completion of each half inning
-      it('should return the bottom of the inning if more away scores have been reported', () => {
-        const awayPeriodScores = [2, 0, 1, 0]
-        const homePeriodScores = [0, 0, 1]
-
-        const wrapper = shallow(<Boxscore
-          completed={false}
-          awayPeriodScores={awayPeriodScores}
-          homePeriodScores={homePeriodScores}
-          league="MLB" />)
-
-        const status = wrapper.instance().gameStatus()
-
-        expect(status).toEqual('BOT 4')
-      })
-
-      it('should return the top of the next inning if the same amount of home/away scores reported', () => {
-        const awayPeriodScores = [2, 0, 1, 0]
-        const homePeriodScores = [0, 0, 1, 1]
-
-        const wrapper = shallow(<Boxscore
-          completed={false}
-          awayPeriodScores={awayPeriodScores}
-          homePeriodScores={homePeriodScores}
-          league="MLB" />)
-
-        const status = wrapper.instance().gameStatus()
-
-        expect(status).toEqual('TOP 5')
-      })
     })
   })
 })

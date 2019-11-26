@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { Row, Col, CardPanel } from 'react-materialize'
 import uuidv1 from 'uuid/v1'
 
+import leagueDisplays from './leagueDisplays'
 import TeamTile from '../team-tile/TeamTile'
 import './boxscore.css'
 import {
@@ -73,23 +74,7 @@ class Boxscore extends Component {
       home: [],
     }
 
-    if (league === 'NBA') {
-      lineScores.header.push(<td className="boxscore-cell grey lighten-2" key={uuidv1()}>T</td>)
-      lineScores.away.push(<td className="boxscore-cell grey lighten-2" key={uuidv1()}>{awayTeamTotals.points}</td>)
-      lineScores.home.push(<td className="boxscore-cell grey lighten-2" key={uuidv1()}>{homeTeamTotals.points}</td>)
-    } if (league === 'MLB') {
-      lineScores.header.push(<td className="boxscore-cell grey lighten-2" key={uuidv1()}>R</td>)
-      lineScores.header.push(<td className="boxscore-cell grey lighten-2" key={uuidv1()}>H</td>)
-      lineScores.header.push(<td className="boxscore-cell grey lighten-2" key={uuidv1()}>E</td>)
-      lineScores.away.push(<td className="boxscore-cell grey lighten-2" key={uuidv1()}>{awayTeamTotals.runs}</td>)
-      lineScores.away.push(<td className="boxscore-cell grey lighten-2" key={uuidv1()}>{awayTeamTotals.hits}</td>)
-      lineScores.away.push(<td className="boxscore-cell grey lighten-2" key={uuidv1()}>{awayTeamTotals.errors}</td>)
-      lineScores.home.push(<td className="boxscore-cell grey lighten-2" key={uuidv1()}>{homeTeamTotals.runs}</td>)
-      lineScores.home.push(<td className="boxscore-cell grey lighten-2" key={uuidv1()}>{homeTeamTotals.hits}</td>)
-      lineScores.home.push(<td className="boxscore-cell grey lighten-2" key={uuidv1()}>{homeTeamTotals.errors}</td>)
-    }
-
-    return lineScores
+    return leagueDisplays[league].gameSummary(awayTeamTotals, homeTeamTotals, lineScores)
   }
 
   gameStatus = () => {
@@ -99,19 +84,10 @@ class Boxscore extends Component {
       awayPeriodScores,
       homePeriodScores,
     } = this.props
-    if (!completed) {
-      if (league === 'NBA') {
-        return awayPeriodScores.length < 5
-          ? `QTR ${awayPeriodScores.length}`
-          : 'OT'
-      } if (league === 'MLB') {
-        if (awayPeriodScores.length > homePeriodScores.length) {
-          return `BOT ${awayPeriodScores.length}`
-        }
-        return `TOP ${homePeriodScores.length + 1}`
-      }
-    }
 
+    if (!completed) {
+      return leagueDisplays[league].gameStatus(awayPeriodScores, homePeriodScores)
+    }
     return 'Final'
   }
 
