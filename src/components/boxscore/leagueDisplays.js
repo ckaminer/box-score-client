@@ -42,10 +42,12 @@ const nbaGameSummary = (awayTeamTotals, homeTeamTotals, lineScores) => {
 
 const leagueDisplays = {
   MLB: {
+    minColumnCount: 9,
     gameStatus: mlbGameStatus,
     gameSummary: mlbGameSummary,
   },
   NBA: {
+    minColumnCount: 4,
     gameStatus: nbaGameStatus,
     gameSummary: nbaGameSummary,
   },

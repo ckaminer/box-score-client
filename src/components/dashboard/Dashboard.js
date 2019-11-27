@@ -37,7 +37,7 @@ class Dashboard extends Component {
     games.forEach((game) => {
       if (activeLeague === game.league || activeLeague === ALL_LEAGUES) {
         const item = (
-          <div className="dashboard-item" key={uuidv1()}>
+          <section className="dashboard-item" key={uuidv1()}>
             <div className="boxscore">
               <Boxscore
                 completed={game.event_information.status === 'completed'}
@@ -52,7 +52,7 @@ class Dashboard extends Component {
             <div className="sidepanel">
               <SidePanel game={game} />
             </div>
-          </div>
+          </section>
         )
         dashboardItems.push(item)
       }
@@ -77,11 +77,11 @@ class Dashboard extends Component {
   }
 
   render = () => (
-    <div>
+    <main>
       {
         this.boxscores()
       }
-    </div>
+    </main>
   )
 }
 

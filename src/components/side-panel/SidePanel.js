@@ -44,7 +44,7 @@ class SidePanel extends Component {
 
   render = () => (
     <CardPanel
-      style={{ height: '100%', boxShadow: '5px 5px lightGrey' }}
+      style={{ height: '100%', boxShadow: '5px 5px 10px lightGrey' }}
       className="grey lighten-4">
       <h5 className="side-panel-title">Top Performers</h5>
       <div className="performer-container">

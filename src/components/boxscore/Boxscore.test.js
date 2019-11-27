@@ -61,7 +61,7 @@ describe('Boxscore', () => {
       expect(lines.home.length).toEqual(12)
     })
 
-    it('should have a different amount of columns depending on the league', () => {
+    it('should have a different amount of summary columns depending on the league', () => {
       const awayScores = [11, 22, 33, 44, 55, 9, 8, 5, 3, 3]
       const homeScores = [66, 77, 88, 99, 10, 9, 8, 5, 3, 3]
       const awayTeam = { abbreviation: 'EDH' }
@@ -88,6 +88,35 @@ describe('Boxscore', () => {
       expect(lines.header.length).toEqual(14)
       expect(lines.away.length).toEqual(14)
       expect(lines.home.length).toEqual(14)
+    })
+
+    it('should return the minimum amount of columns for each league if the game is not complete', () => {
+      const awayScores = [11, 22]
+      const homeScores = [66, 77]
+      const awayTeam = { abbreviation: 'EDH' }
+      const homeTeam = { abbreviation: 'DIL' }
+
+      let wrapper = shallow(<Boxscore
+        league="NBA"
+        awayPeriodScores={awayScores}
+        homePeriodScores={homeScores}
+        awayTeam={awayTeam}
+        homeTeam={homeTeam} />)
+      let lines = wrapper.instance().lineScores()
+      expect(lines.header.length).toEqual(6)
+      expect(lines.away.length).toEqual(6)
+      expect(lines.home.length).toEqual(6)
+
+      wrapper = shallow(<Boxscore
+        league="MLB"
+        awayPeriodScores={awayScores}
+        homePeriodScores={homeScores}
+        awayTeam={awayTeam}
+        homeTeam={homeTeam} />)
+      lines = wrapper.instance().lineScores()
+      expect(lines.header.length).toEqual(13)
+      expect(lines.away.length).toEqual(13)
+      expect(lines.home.length).toEqual(13)
     })
   })
 

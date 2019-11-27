@@ -36,15 +36,18 @@ class Boxscore extends Component {
   lineScores = () => {
     const {
       awayPeriodScores, homePeriodScores,
-      awayTeam, homeTeam,
+      awayTeam, homeTeam, league,
     } = this.props
     const lineScores = {
       header: [],
       away: [],
       home: [],
     }
+
+    const columnCount = Math.max(awayPeriodScores.length, leagueDisplays[league].minColumnCount)
+
     // eslint-disable-next-line no-plusplus
-    for (let i = 0; i <= awayPeriodScores.length; i++) {
+    for (let i = 0; i <= columnCount; i++) {
       if (i === 0) {
         lineScores.header.push(<td className="boxscore-cell grey lighten-2" key={uuidv1()} />)
         lineScores.away.push(<td className="boxscore-cell grey lighten-2" key={uuidv1()}>{awayTeam.abbreviation}</td>)
@@ -103,7 +106,7 @@ class Boxscore extends Component {
               className="grey lighten-4 with-footer"
               textClassName="black-text">
               <Row>
-                <table>
+                <table className="boxscore-table">
                   <tbody>
                     <tr className="boxscore-row">{lineScores.header}</tr>
                     <tr className="boxscore-row">{lineScores.away}</tr>

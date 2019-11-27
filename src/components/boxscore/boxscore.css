@@ -4,8 +4,12 @@ div {
 }
 
 .boxscore-container {
-  box-shadow: 5px 5px lightgrey;
+  box-shadow: 5px 5px 10px lightgrey;
   border-radius: 2px;
+}
+
+.boxscore-table {
+  table-layout: fixed;
 }
 
 .boxscore-row {
