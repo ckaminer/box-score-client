@@ -1,7 +1,9 @@
 const path = require('path')
+const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const HtmlWebpackTemplate = require('html-webpack-template')
 
+const PORT = process.env.BS_CLIENT_PORT ? process.env.BS_CLIENT_PORT : 8080
 const config = {
   entry: './src/index.js',
   output: {
@@ -52,6 +54,9 @@ const config = {
       appMountId: 'app',
       title: 'Box Score',
     }),
+    new webpack.DefinePlugin({
+      'process.env.BS_API_PORT': JSON.stringify(process.env.BS_API_PORT),
+    }),
   ],
   optimization: {
     runtimeChunk: 'single',
@@ -68,6 +73,7 @@ const config = {
   devServer: {
     contentBase: './dist',
     historyApiFallback: true,
+    port: PORT,
   },
 }
 
